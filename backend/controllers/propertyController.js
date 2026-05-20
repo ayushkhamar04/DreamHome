@@ -21,6 +21,9 @@ const submitProperty = async (req, res) => {
       charges,
       paymentMethod,
       paymentDetails,
+      locationLat,
+      locationLng,
+      googleMapsUrl,
     } = req.body;
 
     // Validate image count
@@ -79,6 +82,11 @@ const submitProperty = async (req, res) => {
       charges: Number(charges),
       paymentMethod,
       paymentDetails: parsedPaymentDetails || {},
+      location: {
+        lat: locationLat ? Number(locationLat) : undefined,
+        lng: locationLng ? Number(locationLng) : undefined,
+        googleMapsUrl: googleMapsUrl || undefined,
+      },
     });
 
     res.status(201).json({
@@ -298,12 +306,76 @@ const generateAndSaveReceipt = async (req, res) => {
   }
 };
 
+// Get nearby properties by location
+const getNearbyProperties = async (req, res) => {
+  try {
+    const { lat, lng, radius = 10 } = req.query;
+
+    if (!lat || !lng) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude and longitude are required',
+      });
+    }
+
+    const userLat = parseFloat(lat);
+    const userLng = parseFloat(lng);
+    const radiusInKm = parseFloat(radius) || 10;
+
+    // Get all approved, non-sold properties with location data
+    const properties = await Property.find({
+      status: 'approved',
+      sold: false,
+      'location.lat': { $exists: true },
+      'location.lng': { $exists: true },
+    });
+
+    // Calculate distance and filter
+    const nearbyProperties = properties
+      .map(property => {
+        const propLat = property.location.lat;
+        const propLng = property.location.lng;
+
+        // Haversine formula to calculate distance
+        const R = 6371; // Earth's radius in km
+        const dLat = (propLat - userLat) * Math.PI / 180;
+        const dLng = (propLng - userLng) * Math.PI / 180;
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(userLat * Math.PI / 180) *
+          Math.cos(propLat * Math.PI / 180) *
+          Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+
+        return { ...property.toObject(), distance };
+      })
+      .filter(property => property.distance <= radiusInKm)
+      .sort((a, b) => a.distance - b.distance);
+
+    res.status(200).json({
+      success: true,
+      properties: nearbyProperties,
+      count: nearbyProperties.length,
+      radius: radiusInKm,
+    });
+  } catch (error) {
+    console.error('Error in getNearbyProperties:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch nearby properties',
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   submitProperty,
   getOwnerProperties,
   getApprovedProperties,
   getPropertyById,
   generateAndSaveReceipt,
-  markPropertyAsSold,      // NEW
-  markPropertyAsAvailable,  // NEW
+  markPropertyAsSold,
+  markPropertyAsAvailable,
+  getNearbyProperties,
 };

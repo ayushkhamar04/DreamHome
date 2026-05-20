@@ -32,6 +32,11 @@ const propertySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  location: {
+    lat: { type: Number },
+    lng: { type: Number },
+    googleMapsUrl: { type: String },
+  },
   facilities: {
     type: [String],
     default: [],

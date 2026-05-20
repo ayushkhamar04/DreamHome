@@ -40,9 +40,9 @@ export default function EditProfilePage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!user) return;
     const { name, value } = e.target;
-    
+
     setUser({ ...user, [name]: value });
-    
+
     // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
@@ -80,7 +80,7 @@ export default function EditProfilePage() {
 
     // Save updated user locally (backend API later)
     localStorage.setItem('user', JSON.stringify(user));
-    
+
     setIsSaving(false);
     setShowSuccess(true);
 
@@ -115,31 +115,31 @@ export default function EditProfilePage() {
     .slice(0, 2);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-rose-50">
       <Header />
 
       <main className="flex-1 flex items-center justify-center px-4 py-12 sm:py-16">
         <div className="w-full max-w-2xl">
           {/* Edit Profile Card */}
-          <Card className="relative overflow-hidden shadow-xl border border-gray-200 bg-white">
+          <Card className="relative overflow-hidden shadow-2xl border border-gray-200 bg-white rounded-3xl">
             {/* Decorative top bar */}
-            <div className="h-28 bg-gradient-to-r from-[#b04439] to-[#8d362e] relative overflow-hidden">
+            <div className="h-32 bg-gradient-to-r from-[#b04439] to-[#8d362e] relative overflow-hidden">
               <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
             </div>
-            
+
             {/* Content */}
             <div className="relative px-6 sm:px-8 pb-8">
               {/* Avatar Section */}
-              <div className="flex flex-col items-center -mt-14 mb-8">
+              <div className="flex flex-col items-center -mt-16 mb-8">
                 <div className="relative">
-                  <div className="w-28 h-28 rounded-2xl bg-[#b04439] flex items-center justify-center text-white text-3xl font-bold shadow-xl ring-4 ring-white">
+                  <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#b04439] to-[#8d362e] flex items-center justify-center text-white text-3xl font-bold shadow-xl ring-4 ring-white">
                     {initials}
                   </div>
                   <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg ring-2 ring-[#b04439]">
                     <User className="w-5 h-5 text-[#b04439]" />
                   </div>
                 </div>
-                
+
                 <h1 className="text-3xl font-bold mt-6 mb-1 text-gray-900">
                   Edit Your Profile
                 </h1>
@@ -174,11 +174,10 @@ export default function EditProfilePage() {
                       value={user.name}
                       onChange={handleChange}
                       placeholder="Enter your full name"
-                      className={`h-12 text-base border-2 transition-all ${
-                        errors.name 
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                      className={`h-12 text-base border-2 rounded-xl transition-all ${errors.name
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                           : 'border-gray-200 focus:border-[#b04439] focus:ring-[#b04439]'
-                      }`}
+                        }`}
                     />
                   </div>
                   {errors.name && (
@@ -203,11 +202,10 @@ export default function EditProfilePage() {
                       value={user.email}
                       onChange={handleChange}
                       placeholder="Enter your email address"
-                      className={`h-12 text-base border-2 transition-all ${
-                        errors.email 
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                      className={`h-12 text-base border-2 rounded-xl transition-all ${errors.email
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                           : 'border-gray-200 focus:border-[#b04439] focus:ring-[#b04439]'
-                      }`}
+                        }`}
                     />
                   </div>
                   {errors.email && (
@@ -232,11 +230,10 @@ export default function EditProfilePage() {
                       value={user.phone || ''}
                       onChange={handleChange}
                       placeholder="Enter your phone number"
-                      className={`h-12 text-base border-2 transition-all ${
-                        errors.phone 
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                      className={`h-12 text-base border-2 rounded-xl transition-all ${errors.phone
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                           : 'border-gray-200 focus:border-[#b04439] focus:ring-[#b04439]'
-                      }`}
+                        }`}
                     />
                   </div>
                   {errors.phone && (
@@ -254,7 +251,7 @@ export default function EditProfilePage() {
                   variant="outline"
                   onClick={() => router.push('/profile')}
                   disabled={isSaving}
-                  className="group flex-1 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 shadow-sm hover:shadow-md transition-all duration-300 h-12 text-base"
+                  className="group flex-1 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 shadow-sm hover:shadow-md transition-all duration-300 h-12 text-base rounded-xl"
                 >
                   <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform" />
                   Cancel
@@ -263,7 +260,7 @@ export default function EditProfilePage() {
                 <Button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="group flex-1 bg-[#b04439] hover:bg-[#8d362e] text-white shadow-md hover:shadow-lg transition-all duration-300 h-12 text-base disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="group flex-1 bg-gradient-to-r from-[#b04439] to-[#8d362e] hover:from-[#8d362e] hover:to-[#6b2a23] text-white shadow-md hover:shadow-lg transition-all duration-300 h-12 text-base disabled:opacity-70 disabled:cursor-not-allowed rounded-xl"
                 >
                   {isSaving ? (
                     <>

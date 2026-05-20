@@ -9,6 +9,7 @@ const {
   generateAndSaveReceipt,
    markPropertyAsSold,
   markPropertyAsAvailable,
+  getNearbyProperties,
 } = require('../controllers/propertyController');
 const { protect } = require('../middleware/auth');
 
@@ -44,6 +45,9 @@ router.get('/owner', protect, getOwnerProperties); // ADD protect here too
 router.post('/receipt/:propertyId', protect, generateAndSaveReceipt);
 // Get all approved properties (public route - for home page)
 router.get('/approved', getApprovedProperties);
+
+// Get nearby properties (public route) - must be before /:id
+router.get('/nearby', getNearbyProperties);
 
 // Get single property by ID (public route)
 router.get('/:id', getPropertyById);
