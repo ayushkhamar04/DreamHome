@@ -369,14 +369,24 @@ function PropertyCard({ property, isBuyer, onInquiry }: {
 
         {/* Mini map */}
         {property.location?.lat && property.location?.lng && (
-          <div className="rounded-2xl overflow-hidden border border-border/85 h-28 relative group/map">
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${property.location.lat},${property.location.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-2xl overflow-hidden border border-border/85 h-28 relative group/map cursor-pointer"
+          >
             <div className="absolute inset-0 bg-accent/5 group-hover/map:bg-transparent transition-colors pointer-events-none z-10" />
             <iframe
               width="100%" height="100%" frameBorder="0" scrolling="no" loading="lazy"
               src={`https://www.openstreetmap.org/export/embed.html?bbox=${property.location.lng - 0.01}%2C${property.location.lat - 0.01}%2C${property.location.lng + 0.01}%2C${property.location.lat + 0.01}&layer=mapnik&marker=${property.location.lat}%2C${property.location.lng}`}
-              className="w-full h-full grayscale opacity-80 group-hover/map:grayscale-0 group-hover/map:opacity-100 transition-all duration-500"
+              className="w-full h-full grayscale opacity-80 group-hover/map:grayscale-0 group-hover/map:opacity-100 transition-all duration-500 pointer-events-none"
             />
-          </div>
+            {/* Directions overlay */}
+            <div className="absolute top-2.5 right-2.5 z-20 bg-[#0F172A]/85 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider border border-white/10 flex items-center gap-1 shadow group-hover/map:bg-accent group-hover/map:text-accent-foreground transition-all duration-300">
+              <MapPin className="w-3 h-3 text-accent group-hover/map:text-accent-foreground" />
+              <span>Get Directions</span>
+            </div>
+          </a>
         )}
 
         {/* Facilities */}
