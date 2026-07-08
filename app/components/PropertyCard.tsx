@@ -237,7 +237,7 @@ export default function PropertyCard({ property }: any) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-neutral-600">
               <MapPin className="w-4 h-4 text-[#2e7d54]" />
-              <span className="text-sm font-medium">{property.city || 'Unknown'}</span>
+              <span className="text-sm font-medium">{property.address ? `${property.address}, ${property.city}` : property.city || 'Unknown'}</span>
             </div>
             <div className="text-right">
               <div className="text-2xl font-bold text-[#2e7d54]">

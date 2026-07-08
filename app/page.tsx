@@ -148,7 +148,7 @@ function FeaturedPropertyCard({ property, isBuyer, onInquiry }: {
           )}
           <div className="flex items-center gap-1.5 mt-3 text-slate-500">
             <MapPin className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">{property.city || 'Unknown'}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest">{property.address ? `${property.address}, ${property.city}` : property.city || 'Unknown'}</span>
           </div>
         </div>
 
@@ -345,7 +345,7 @@ function PropertyCard({ property, isBuyer, onInquiry }: {
           )}
           <div className="flex items-center gap-1.5 mt-2.5 text-slate-500">
             <MapPin className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">{property.city || 'Unknown'}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest">{property.address ? `${property.address}, ${property.city}` : property.city || 'Unknown'}</span>
           </div>
         </div>
 
