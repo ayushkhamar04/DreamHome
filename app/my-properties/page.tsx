@@ -10,7 +10,10 @@ import {
   RotateCcw,
   Home,
   MapPin,
-  Clock
+  Clock,
+  Receipt,
+  Sparkles,
+  FileCheck
 } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
@@ -208,12 +211,14 @@ export default function MyPropertiesPage() {
           </div>
         ) : (
           <div className="space-y-6">
-            {properties.map((property: any) => (
-              <div
-                key={property._id}
-                className="bg-card rounded-3xl border border-border/80 p-6 shadow-sm hover:shadow-md transition-all duration-300"
-              >
-                <div className="flex flex-col lg:flex-row gap-6">
+            {properties.map((property: any) => {
+              const receiptUrl = property.receiptUrl || property.paymentReceipt || property.receipt || null;
+              return (
+                <div
+                  key={property._id}
+                  className="bg-card rounded-3xl border border-border/80 p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <div className="flex flex-col lg:flex-row gap-6">
                   {/* Property Image */}
                   <div className="w-full lg:w-48 h-40 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 relative">
                     {property.propertyImages && property.propertyImages.length > 0 ? (
@@ -285,6 +290,56 @@ export default function MyPropertiesPage() {
                       </div>
                     </div>
 
+                    {/* Documents Row */}
+                    {(receiptUrl || property.propertyProof || (property.status === 'approved' && !receiptUrl)) && (
+                      <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-2">
+                        {receiptUrl && (
+                          <a
+                            href={receiptUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-[10px] font-bold uppercase tracking-wider rounded-full transition-all shadow-sm"
+                          >
+                            <Receipt className="w-3.5 h-3.5" />
+                            <span>Payment Receipt</span>
+                          </a>
+                        )}
+
+                        {property.status === 'approved' && !receiptUrl && (
+                          <button
+                            onClick={async () => {
+                              if (!confirm('Generate payment receipt now?')) return;
+                              try {
+                                const res = await api.post(`/properties/receipt/${property._id}`);
+                                if (res.data.success) {
+                                  window.location.reload();
+                                }
+                              } catch (err) {
+                                alert('Failed to generate receipt');
+                                console.error(err);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/25 text-[10px] font-bold uppercase tracking-wider rounded-full transition-all shadow-sm"
+                          >
+                            <Sparkles className="w-3.5 h-3.5" />
+                            <span>Generate Receipt</span>
+                          </button>
+                        )}
+
+                        {property.propertyProof && (
+                          <a
+                            href={property.propertyProof}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 border border-border/80 text-[10px] font-bold uppercase tracking-wider rounded-full transition-all shadow-sm"
+                          >
+                            <FileCheck className="w-3.5 h-3.5" />
+                            <span>Property Proof</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
+
                     {/* Action buttons footer */}
                     {property.status === 'approved' && (
                       <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-4 justify-between items-center">
@@ -339,8 +394,9 @@ export default function MyPropertiesPage() {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
         )}
       </div>
     </div>

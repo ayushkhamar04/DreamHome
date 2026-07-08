@@ -70,7 +70,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-white text-sm uppercase tracking-wider mb-6 font-display">Company</h3>
             <ul className="space-y-4">
-              {['About Us', 'Meet The Team', 'Careers', 'Press & Media', 'Contact'].map((item) => (
+              {['About Us', 'Meet The Team', 'Press & Media', 'Contact'].map((item) => (
                 <li key={item}>
                   <a href="#" className="text-sm text-slate-400 hover:text-accent transition-colors flex items-center gap-2 group">
                     <div className="w-1.5 h-1.5 rounded-full bg-accent/40 group-hover:bg-accent transition-colors" />
@@ -86,8 +86,8 @@ export default function Footer() {
             <h3 className="font-bold text-white text-sm uppercase tracking-wider mb-6 font-display">Get in Touch</h3>
             <ul className="space-y-5">
               {[
-                { icon: MapPin, label: 'Office', value: <>125 Green Lane, Suite 400<br />New Delhi, ND 110001</> },
-                { icon: Phone, label: 'Phone', value: '+91 (800) 123-4567' },
+                { icon: MapPin, label: 'Office', value: <>Gift City<br />Tower-1 Gandhinagar</> },
+                { icon: Phone, label: 'Phone', value: '+91 9773065512' },
                 { icon: Mail, label: 'Email', value: 'hello@dreamhome.com' },
               ].map(({ icon: Icon, label, value }) => (
                 <li key={label}>
