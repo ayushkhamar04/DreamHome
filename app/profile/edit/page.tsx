@@ -92,13 +92,10 @@ export default function EditProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative">
-            <div className="w-16 h-16 rounded-full border-4 border-gray-200"></div>
-            <div className="w-16 h-16 rounded-full border-4 border-[#b04439] border-t-transparent animate-spin absolute top-0"></div>
-          </div>
-          <p className="text-lg font-medium text-gray-900">Loading...</p>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-8 h-8 animate-spin text-accent" />
+          <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Loading...</p>
         </div>
       </div>
     );
@@ -115,46 +112,44 @@ export default function EditProfilePage() {
     .slice(0, 2);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-white to-rose-50">
+    <div className="min-h-screen flex flex-col bg-background text-foreground animate-fade-in">
       <Header />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-12 sm:py-16">
-        <div className="w-full max-w-2xl">
+      <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
+        <div className="w-full max-w-lg">
           {/* Edit Profile Card */}
-          <Card className="relative overflow-hidden shadow-2xl border border-gray-200 bg-white rounded-3xl">
+          <Card className="relative overflow-hidden border border-border/80 bg-card rounded-3xl shadow-sm">
             {/* Decorative top bar */}
-            <div className="h-32 bg-gradient-to-r from-[#b04439] to-[#8d362e] relative overflow-hidden">
-              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
-            </div>
+            <div className="h-24 bg-[#0F172A] relative overflow-hidden" />
 
             {/* Content */}
-            <div className="relative px-6 sm:px-8 pb-8">
+            <div className="relative px-6 pb-6">
               {/* Avatar Section */}
-              <div className="flex flex-col items-center -mt-16 mb-8">
+              <div className="flex flex-col items-center -mt-12 mb-6">
                 <div className="relative">
-                  <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#b04439] to-[#8d362e] flex items-center justify-center text-white text-3xl font-bold shadow-xl ring-4 ring-white">
+                  <div className="w-24 h-24 rounded-2xl bg-accent flex items-center justify-center text-accent-foreground text-2xl font-bold shadow ring-4 ring-card">
                     {initials}
                   </div>
-                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg ring-2 ring-[#b04439]">
-                    <User className="w-5 h-5 text-[#b04439]" />
+                  <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-card rounded-full flex items-center justify-center shadow border border-border/80 ring-1 ring-accent">
+                    <User className="w-4 h-4 text-accent" />
                   </div>
                 </div>
 
-                <h1 className="text-3xl font-bold mt-6 mb-1 text-gray-900">
+                <h1 className="text-2xl font-bold font-display mt-4 mb-0.5 text-slate-900">
                   Edit Your Profile
                 </h1>
-                <p className="text-gray-500 text-sm">Update your personal information</p>
+                <p className="text-xs font-semibold text-slate-500">Update your personal information</p>
               </div>
 
               {/* Success Message */}
               {showSuccess && (
-                <div className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
-                  <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <div className="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-emerald-900 font-semibold text-sm">Success!</p>
-                    <p className="text-emerald-700 text-xs">Your profile has been updated successfully</p>
+                    <p className="text-emerald-900 font-bold text-xs">Success!</p>
+                    <p className="text-emerald-700 text-[10px] font-semibold mt-0.5">Your profile has been updated successfully</p>
                   </div>
                 </div>
               )}
@@ -163,8 +158,8 @@ export default function EditProfilePage() {
               <div className="space-y-5 mb-8">
                 {/* Name Field */}
                 <div className="group">
-                  <Label htmlFor="name" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                    <User className="w-4 h-4 text-[#b04439]" />
+                  <Label htmlFor="name" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5 text-accent" />
                     Full Name
                   </Label>
                   <div className="relative">
@@ -174,15 +169,15 @@ export default function EditProfilePage() {
                       value={user.name}
                       onChange={handleChange}
                       placeholder="Enter your full name"
-                      className={`h-12 text-base border-2 rounded-xl transition-all ${errors.name
+                      className={`h-10 text-xs bg-slate-50 border rounded-xl placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white text-slate-800 font-semibold transition-all ${errors.name
                           ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-200 focus:border-[#b04439] focus:ring-[#b04439]'
+                          : 'border-border/80 focus:border-accent'
                         }`}
                     />
                   </div>
                   {errors.name && (
-                    <div className="mt-2 flex items-center gap-2 text-sm text-red-600">
-                      <AlertCircle className="w-4 h-4" />
+                    <div className="mt-2 flex items-center gap-1 text-[10px] font-bold text-red-600 uppercase tracking-wider">
+                      <AlertCircle className="w-3.5 h-3.5" />
                       <span>{errors.name}</span>
                     </div>
                   )}
@@ -190,8 +185,8 @@ export default function EditProfilePage() {
 
                 {/* Email Field */}
                 <div className="group">
-                  <Label htmlFor="email" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-[#b04439]" />
+                  <Label htmlFor="email" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <Mail className="w-3.5 h-3.5 text-accent" />
                     Email Address
                   </Label>
                   <div className="relative">
@@ -202,15 +197,15 @@ export default function EditProfilePage() {
                       value={user.email}
                       onChange={handleChange}
                       placeholder="Enter your email address"
-                      className={`h-12 text-base border-2 rounded-xl transition-all ${errors.email
+                      className={`h-10 text-xs bg-slate-50 border rounded-xl placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white text-slate-800 font-semibold transition-all ${errors.email
                           ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-200 focus:border-[#b04439] focus:ring-[#b04439]'
+                          : 'border-border/80 focus:border-accent'
                         }`}
                     />
                   </div>
                   {errors.email && (
-                    <div className="mt-2 flex items-center gap-2 text-sm text-red-600">
-                      <AlertCircle className="w-4 h-4" />
+                    <div className="mt-2 flex items-center gap-1 text-[10px] font-bold text-red-600 uppercase tracking-wider">
+                      <AlertCircle className="w-3.5 h-3.5" />
                       <span>{errors.email}</span>
                     </div>
                   )}
@@ -218,9 +213,9 @@ export default function EditProfilePage() {
 
                 {/* Phone Field */}
                 <div className="group">
-                  <Label htmlFor="phone" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-[#b04439]" />
-                    Phone Number <span className="text-gray-400 font-normal text-xs ml-1">(Optional)</span>
+                  <Label htmlFor="phone" className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-accent" />
+                    Phone Number <span className="text-slate-400 font-normal lowercase ml-1">(optional)</span>
                   </Label>
                   <div className="relative">
                     <Input
@@ -230,15 +225,15 @@ export default function EditProfilePage() {
                       value={user.phone || ''}
                       onChange={handleChange}
                       placeholder="Enter your phone number"
-                      className={`h-12 text-base border-2 rounded-xl transition-all ${errors.phone
+                      className={`h-10 text-xs bg-slate-50 border rounded-xl placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white text-slate-800 font-semibold transition-all ${errors.phone
                           ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-200 focus:border-[#b04439] focus:ring-[#b04439]'
+                          : 'border-border/80 focus:border-accent'
                         }`}
                     />
                   </div>
                   {errors.phone && (
-                    <div className="mt-2 flex items-center gap-2 text-sm text-red-600">
-                      <AlertCircle className="w-4 h-4" />
+                    <div className="mt-2 flex items-center gap-1 text-[10px] font-bold text-red-600 uppercase tracking-wider">
+                      <AlertCircle className="w-3.5 h-3.5" />
                       <span>{errors.phone}</span>
                     </div>
                   )}
@@ -246,30 +241,30 @@ export default function EditProfilePage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100">
                 <Button
                   variant="outline"
                   onClick={() => router.push('/profile')}
                   disabled={isSaving}
-                  className="group flex-1 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 shadow-sm hover:shadow-md transition-all duration-300 h-12 text-base rounded-xl"
+                  className="flex-1 border border-border/80 hover:bg-slate-50 text-slate-800 rounded-full font-bold h-11 text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
-                  <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform" />
+                  <X className="w-3.5 h-3.5" />
                   Cancel
                 </Button>
 
                 <Button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="group flex-1 bg-gradient-to-r from-[#b04439] to-[#8d362e] hover:from-[#8d362e] hover:to-[#6b2a23] text-white shadow-md hover:shadow-lg transition-all duration-300 h-12 text-base disabled:opacity-70 disabled:cursor-not-allowed rounded-xl"
+                  className="flex-1 bg-[#0F172A] hover:bg-[#334155] text-white rounded-full font-bold h-11 text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
                   {isSaving ? (
                     <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Saving Changes...
+                      <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />
+                      Saving...
                     </>
                   ) : (
                     <>
-                      <Save className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                      <Save className="w-3.5 h-3.5" />
                       Save Changes
                     </>
                   )}

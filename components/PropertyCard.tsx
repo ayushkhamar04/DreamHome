@@ -53,20 +53,20 @@ export default function PropertyCard({
 
   return (
     <Link href={`/property/${id}`}>
-      <div className="bg-card rounded-xl overflow-hidden border border-border hover:border-primary/50 hover:shadow-2xl transition-all duration-300 cursor-pointer group h-full flex flex-col">
+      <div className="bg-card rounded-3xl overflow-hidden border border-border/80 hover:border-accent/30 hover:shadow-[0_30px_70px_-24px_rgba(15,23,42,0.12)] transition-all duration-500 cursor-pointer group h-full flex flex-col">
         {/* Image Container */}
-        <div className="relative h-72 overflow-hidden bg-secondary">
+        <div className="relative h-72 overflow-hidden bg-slate-100">
           <img
             src={currentImage || "/placeholder.svg"}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/70 via-transparent to-transparent" />
           
           {/* Image Counter */}
           {propertyImages.length > 1 && (
-            <div className="absolute bottom-3 left-3 bg-black/70 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-              <ImageIcon className="w-3 h-3" />
+            <div className="absolute bottom-3 left-3 bg-[#0F172A]/80 text-[#FAFAF8] px-3 py-1 rounded-full text-[10px] font-bold tracking-wider flex items-center gap-1.5 backdrop-blur-sm">
+              <ImageIcon className="w-3 h-3 text-accent" />
               {imageIndex + 1} / {propertyImages.length}
             </div>
           )}
@@ -75,14 +75,14 @@ export default function PropertyCard({
           {propertyImages.length > 1 && (
             <button
               onClick={handleNextImage}
-              className="absolute right-3 bottom-3 bg-white/90 hover:bg-white text-foreground p-2 rounded-full shadow-lg transition opacity-0 group-hover:opacity-100"
+              className="absolute right-3 bottom-3 bg-white/90 hover:bg-white text-slate-800 p-2 rounded-full shadow-md transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-105"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           )}
           
           {/* Type Badge */}
-          <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-4 py-2 rounded-full text-xs font-bold tracking-wide">
+          <div className="absolute top-4 left-4 bg-accent text-accent-foreground px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase">
             {listingType === 'both' ? 'BUY/RENT' : listingType === 'buy' ? 'BUY' : 'RENT'}
           </div>
 
@@ -93,11 +93,11 @@ export default function PropertyCard({
               e.stopPropagation();
               setIsFavorited(!isFavorited);
             }}
-            className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full shadow-lg hover:shadow-xl hover:bg-gray-50 transition flex items-center justify-center"
+            className="absolute top-4 right-4 w-9 h-9 bg-white/95 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-105"
           >
             <Heart
-              className={`w-5 h-5 transition-all ${
-                isFavorited ? 'fill-destructive text-destructive' : 'text-gray-400'
+              className={`w-4 h-4 transition-all duration-300 ${
+                isFavorited ? 'fill-red-500 text-red-500' : 'text-slate-400'
               }`}
             />
           </button>
@@ -106,41 +106,41 @@ export default function PropertyCard({
         {/* Content */}
         <div className="p-6 flex-1 flex flex-col">
           {/* Location */}
-          <div className="flex items-center gap-2 text-muted-foreground mb-2">
-            <MapPin className="w-4 h-4 flex-shrink-0" />
-            <p className="text-sm font-medium">{city}</p>
+          <div className="flex items-center gap-1.5 text-slate-500 mb-2">
+            <MapPin className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+            <p className="text-[10px] font-bold uppercase tracking-widest">{city}</p>
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-semibold text-foreground mb-4 line-clamp-2 text-balance">
+          <h3 className="text-base font-bold font-display text-slate-900 group-hover:text-accent transition-colors duration-300 line-clamp-2 text-balance mb-4">
             {title}
           </h3>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-3 gap-3 mb-6 pb-6 border-b border-border">
-            <div className="flex items-center gap-2">
-              <Bed className="w-4 h-4 text-primary flex-shrink-0" />
-              <span className="text-xs text-muted-foreground font-medium">{bedrooms}</span>
+          <div className="grid grid-cols-3 gap-2 mb-5 pb-5 border-b border-border/80">
+            <div className="flex items-center gap-1.5">
+              <Bed className="w-4 h-4 text-accent flex-shrink-0" />
+              <span className="text-xs text-slate-600 font-mono font-bold">{bedrooms} Beds</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Bath className="w-4 h-4 text-primary flex-shrink-0" />
-              <span className="text-xs text-muted-foreground font-medium">{bathrooms}</span>
+            <div className="flex items-center gap-1.5">
+              <Bath className="w-4 h-4 text-accent flex-shrink-0" />
+              <span className="text-xs text-slate-600 font-mono font-bold">{bathrooms} Baths</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Maximize2 className="w-4 h-4 text-primary flex-shrink-0" />
-              <span className="text-xs text-muted-foreground font-medium">{(sqftArea/1000).toFixed(1)}k sqft</span>
+            <div className="flex items-center gap-1.5">
+              <Maximize2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span className="text-xs text-slate-600 font-mono font-bold">{(sqftArea/1000).toFixed(1)}k sqft</span>
             </div>
           </div>
 
           {/* Price and Button */}
           <div className="flex items-center justify-between mt-auto">
             <div>
-              <p className="text-2xl font-bold text-primary">
+              <p className="text-xl font-bold font-mono text-[#0F172A]">
                 {formatPrice(price)}
               </p>
             </div>
-            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-1">
-              View <ArrowRight className="w-3 h-3" />
+            <Button size="sm" className="bg-[#0F172A] hover:bg-[#334155] text-white hover:text-white rounded-full font-bold px-4 py-2 h-9 text-xs uppercase tracking-wider shadow-sm transition-all duration-300 flex items-center gap-1.5">
+              View <ArrowRight className="w-3 h-3 text-accent" />
             </Button>
           </div>
         </div>

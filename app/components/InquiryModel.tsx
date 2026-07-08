@@ -182,7 +182,7 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                     type="text"
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                     placeholder="Enter your full name"
                     required
                   />
@@ -200,7 +200,7 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                     placeholder="your.email@example.com"
                     required
                   />
@@ -218,7 +218,7 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                     placeholder="+91 98765 43210"
                     required
                   />
@@ -236,7 +236,7 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                     type="text"
                     value={formData.profession}
                     onChange={(e) => setFormData({ ...formData, profession: e.target.value })}
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all"
                     placeholder="e.g., Software Engineer, Teacher, Doctor"
                     required
                   />
@@ -259,7 +259,7 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                   />
                   <label
                     htmlFor="identity-proof-upload"
-                    className="flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 dark:hover:border-blue-500 bg-neutral-50 dark:bg-neutral-800/50 cursor-pointer transition-all group"
+                    className="flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-emerald-500 dark:hover:border-emerald-500 bg-neutral-50 dark:bg-neutral-800/50 cursor-pointer transition-all group"
                   >
                     {previewUrl ? (
                       <div className="relative w-full h-full p-4">
@@ -271,8 +271,8 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                       </div>
                     ) : (
                       <div className="flex flex-col items-center">
-                        <Upload className="w-10 h-10 text-neutral-400 group-hover:text-blue-500 transition-colors mb-2" />
-                        <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 group-hover:text-blue-500">
+                        <Upload className="w-10 h-10 text-neutral-400 group-hover:text-emerald-500 transition-colors mb-2" />
+                        <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400 group-hover:text-emerald-500">
                           Click to upload identity proof
                         </p>
                         <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
@@ -302,7 +302,7 @@ export default function InquiryModal({ isOpen, onClose, propertyId, propertyTitl
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white"
+                  className="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-600 hover:from-emerald-700 hover:to-emerald-700 text-white"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

@@ -150,43 +150,43 @@ function VerifyOTPForm() {
   };
 
   return (
-    <div className="w-full max-w-md">
-      <div className="bg-card rounded-lg border border-border p-8">
+    <div className="w-full max-w-md animate-fade-in">
+      <div className="bg-card rounded-[2rem] border border-border/80 p-8 shadow-sm">
         {/* Back Button */}
         <Link 
           href="/auth/forgot-password" 
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+          className="inline-flex items-center text-[10px] font-bold text-slate-500 hover:text-slate-800 mb-6 transition-colors uppercase tracking-wider"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
+          <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
           Back
         </Link>
 
         <div className="mb-8">
-          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-            <span className="text-2xl">🔐</span>
+          <div className="w-12 h-12 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center mb-4 text-xl">
+            🔐
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Verify Code</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl font-bold font-display text-slate-900 mb-2">Verify Code</h1>
+          <p className="text-xs font-semibold text-slate-500 leading-relaxed">
             We've sent a 6-digit verification code to{' '}
-            <span className="font-semibold text-foreground">{email}</span>
+            <span className="font-bold text-slate-800">{email}</span>
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-            <p className="text-sm text-destructive">{error}</p>
+          <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl">
+            <p className="text-xs font-bold text-rose-700">{error}</p>
           </div>
         )}
 
         {success && (
-          <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          <div className="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">
+                <p className="text-xs font-bold text-emerald-900">
                   Code verified successfully!
                 </p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-200 mt-1">
+                <p className="text-[10px] text-emerald-700 font-semibold mt-0.5">
                   Redirecting to reset password...
                 </p>
               </div>
@@ -197,7 +197,7 @@ function VerifyOTPForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* OTP Input */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-3">
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3">
               Enter Verification Code
             </label>
             <div className="flex gap-2 justify-between" onPaste={handlePaste}>
@@ -212,36 +212,36 @@ function VerifyOTPForm() {
                   onChange={(e) => handleOtpChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
                   disabled={success}
-                  className="w-12 h-14 text-center text-2xl font-bold bg-secondary border-2 border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="w-12 h-14 text-center text-2xl font-bold bg-slate-50 border border-border/80 rounded-xl text-slate-850 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 />
               ))}
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-[10px] font-semibold text-slate-405 mt-2">
               Code expires in 10 minutes
             </p>
           </div>
 
           {/* Timer and Resend */}
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-between text-xs">
             {!canResend ? (
-              <p className="text-muted-foreground">
-                Resend code in <span className="font-semibold text-foreground">{timer}s</span>
+              <p className="text-slate-400 font-semibold">
+                Resend code in <span className="font-bold text-slate-800">{timer}s</span>
               </p>
             ) : (
               <button
                 type="button"
                 onClick={handleResendOTP}
                 disabled={isResending}
-                className="text-primary hover:text-primary/80 font-semibold flex items-center gap-1 disabled:opacity-50"
+                className="text-accent hover:text-accent/90 font-bold uppercase tracking-wider flex items-center gap-1 disabled:opacity-50"
               >
                 {isResending ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     Sending...
                   </>
                 ) : (
                   <>
-                    <RotateCcw className="w-4 h-4" />
+                    <RotateCcw className="w-3.5 h-3.5" />
                     Resend Code
                   </>
                 )}
@@ -252,16 +252,16 @@ function VerifyOTPForm() {
           <Button
             type="submit"
             disabled={isLoading || success || otp.join('').length !== 6}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="w-full bg-[#0F172A] hover:bg-[#334155] text-white rounded-full font-bold h-11 text-xs uppercase tracking-wider transition-all shadow-sm"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                 Verifying...
               </>
             ) : success ? (
               <>
-                <CheckCircle2 className="w-4 h-4 mr-2" />
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
                 Verified!
               </>
             ) : (
@@ -270,13 +270,13 @@ function VerifyOTPForm() {
           </Button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-border">
-          <p className="text-center text-sm text-muted-foreground">
+        <div className="mt-6 pt-6 border-t border-slate-100">
+          <p className="text-center text-xs text-slate-450 font-semibold">
             Didn't receive the code?{' '}
             <button
               onClick={handleResendOTP}
               disabled={!canResend || isResending}
-              className="text-primary hover:text-primary/80 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-accent hover:text-accent/90 font-bold uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Resend
             </button>
@@ -292,12 +292,12 @@ export default function VerifyOTPPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
         <Suspense fallback={
           <div className="w-full max-w-md">
-            <div className="bg-card rounded-lg border border-border p-8">
-              <div className="flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <div className="bg-card rounded-[2rem] border border-border/80 p-8">
+              <div className="flex items-center justify-center py-10">
+                <Loader2 className="w-8 h-8 animate-spin text-accent" />
               </div>
             </div>
           </div>

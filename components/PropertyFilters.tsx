@@ -3,7 +3,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { Search, X, MapPin, DollarSign, Filter, Bed, Building2 } from 'lucide-react';
+import { Search, X, MapPin, IndianRupee, SlidersHorizontal, Bed, Building2, Tag } from 'lucide-react';
 
 interface PropertyFiltersProps {
   onFilter: (filters: {
@@ -14,6 +14,18 @@ interface PropertyFiltersProps {
     bhk?: string;
     propertyType?: string;
   }) => void;
+}
+
+const fieldBase =
+  'w-full rounded-2xl bg-muted/60 border border-border px-4 py-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary focus:bg-card transition';
+
+function FieldLabel({ icon: Icon, children }: { icon?: any; children: React.ReactNode }) {
+  return (
+    <label className="flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground mb-2 uppercase tracking-[0.14em]">
+      {Icon && <Icon className="w-3.5 h-3.5 text-primary" />}
+      {children}
+    </label>
+  );
 }
 
 export default function PropertyFilters({ onFilter }: PropertyFiltersProps) {
@@ -49,57 +61,61 @@ export default function PropertyFilters({ onFilter }: PropertyFiltersProps) {
   const hasFilters = city || propertyFor || bhk || propertyType || minPrice || maxPrice;
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-8 mb-12 shadow-sm">
-      <div className="flex items-center gap-2 mb-6">
-        <Filter className="w-5 h-5 text-[#b04439]" />
-        <h3 className="text-lg font-bold text-gray-900">Search Filters</h3>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
-          {/* City Input */}
+    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 mb-12 shadow-[0_18px_50px_-30px_rgba(20,60,40,0.35)]">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-accent border border-primary/15 flex items-center justify-center">
+            <SlidersHorizontal className="w-5 h-5 text-primary" />
+          </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-              Location
-            </label>
+            <h3 className="text-lg font-display font-semibold text-foreground leading-tight">Refine your search</h3>
+            <p className="text-xs text-muted-foreground font-medium">Find the best place, effortlessly</p>
+          </div>
+        </div>
+        {hasFilters && (
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={handleReset}
+            className="text-muted-foreground hover:text-primary gap-1.5 hover:bg-accent rounded-full h-9 px-4 font-semibold"
+          >
+            <X className="w-4 h-4" />
+            Clear
+          </Button>
+        )}
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 items-end">
+          {/* City */}
+          <div className="sm:col-span-2 xl:col-span-1">
+            <FieldLabel icon={MapPin}>Location</FieldLabel>
             <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               <input
                 type="text"
-                placeholder="City or neighborhood..."
+                placeholder="City or area…"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#b04439] focus:border-[#b04439] transition"
+                className={fieldBase + ' pl-10'}
               />
             </div>
           </div>
 
           {/* Property For */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-              Property For
-            </label>
-            <select
-              value={propertyFor}
-              onChange={(e) => setPropertyFor(e.target.value)}
-              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#b04439] focus:border-[#b04439] transition cursor-pointer"
-            >
+            <FieldLabel icon={Tag}>For</FieldLabel>
+            <select value={propertyFor} onChange={(e) => setPropertyFor(e.target.value)} className={fieldBase + ' cursor-pointer'}>
               <option value="">All</option>
               <option value="sell">For Sale</option>
               <option value="rent">For Rent</option>
             </select>
           </div>
 
-          {/* BHK Filter */}
+          {/* BHK */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-              <Bed className="w-3 h-3 inline mr-1" />
-              BHK
-            </label>
-            <select
-              value={bhk}
-              onChange={(e) => setBhk(e.target.value)}
-              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#b04439] focus:border-[#b04439] transition cursor-pointer"
-            >
+            <FieldLabel icon={Bed}>Rooms</FieldLabel>
+            <select value={bhk} onChange={(e) => setBhk(e.target.value)} className={fieldBase + ' cursor-pointer'}>
               <option value="">Any</option>
               <option value="1 BHK">1 BHK</option>
               <option value="2 BHK">2 BHK</option>
@@ -109,17 +125,10 @@ export default function PropertyFilters({ onFilter }: PropertyFiltersProps) {
             </select>
           </div>
 
-          {/* Property Type */}
+          {/* Type */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-              <Building2 className="w-3 h-3 inline mr-1" />
-              Type
-            </label>
-            <select
-              value={propertyType}
-              onChange={(e) => setPropertyType(e.target.value)}
-              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#b04439] focus:border-[#b04439] transition cursor-pointer"
-            >
+            <FieldLabel icon={Building2}>Type</FieldLabel>
+            <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)} className={fieldBase + ' cursor-pointer'}>
               <option value="">Any</option>
               <option value="apartment">Apartment</option>
               <option value="house">House</option>
@@ -131,65 +140,46 @@ export default function PropertyFilters({ onFilter }: PropertyFiltersProps) {
 
           {/* Min Price */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-              Min Price
-            </label>
+            <FieldLabel icon={IndianRupee}>Min Price</FieldLabel>
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               <input
                 type="number"
-                placeholder="₹0"
+                placeholder="0"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#b04439] focus:border-[#b04439] transition"
+                className={fieldBase + ' pl-10'}
               />
             </div>
           </div>
 
           {/* Max Price */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-              Max Price
-            </label>
+            <FieldLabel icon={IndianRupee}>Max Price</FieldLabel>
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               <input
                 type="number"
-                placeholder="₹ Max"
+                placeholder="Any"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#b04439] focus:border-[#b04439] transition"
+                className={fieldBase + ' pl-10'}
               />
             </div>
           </div>
 
-          {/* Search Button */}
-          <div className="flex items-end">
+          {/* Search */}
+          <div>
             <Button
               type="submit"
               size="lg"
-              className="w-full bg-gradient-to-r from-[#b04439] to-[#8d362e] hover:from-[#8d362e] hover:to-[#6b2a23] text-white gap-2 font-semibold rounded-xl shadow-md hover:shadow-lg transition-all"
+              className="w-full h-[52px] bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-bold rounded-2xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all"
             >
               <Search className="w-4 h-4" />
               Search
             </Button>
           </div>
         </div>
-
-        {/* Reset Button */}
-        {hasFilters && (
-          <div className="flex justify-end">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={handleReset}
-              className="text-gray-500 hover:text-[#b04439] gap-1 hover:bg-rose-50 rounded-xl"
-            >
-              <X className="w-4 h-4" />
-              Clear Filters
-            </Button>
-          </div>
-        )}
       </form>
     </div>
   );

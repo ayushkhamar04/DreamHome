@@ -122,11 +122,11 @@ export default function PropertyCard({ property }: any) {
   const receiptUrl = getReceiptUrl();
 
   return (
-    <div className="group relative rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-200">
+    <div className="group relative rounded-3xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-500 border border-border/80">
       
       {/* Image Carousel Section */}
       <div 
-        className="relative h-80 bg-neutral-900 overflow-hidden"
+        className="relative h-64 bg-slate-900 overflow-hidden"
         onMouseEnter={() => setIsImageHovered(true)}
         onMouseLeave={() => setIsImageHovered(false)}
       >
@@ -137,11 +137,11 @@ export default function PropertyCard({ property }: any) {
               <img
                 src={images[currentImageIndex]}
                 alt={`${property.propertyType || 'Property'} - ${property.bhk || 'N/A'}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
               
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/70 via-transparent to-transparent"></div>
             </div>
 
             {/* Navigation Arrows */}
@@ -149,17 +149,17 @@ export default function PropertyCard({ property }: any) {
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center hover:bg-white transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow opacity-0 group-hover:opacity-100"
                   aria-label="Previous image"
                 >
-                  <ChevronLeft className="w-5 h-5 text-black" />
+                  <ChevronLeft className="w-4 h-4 text-slate-800" />
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center hover:bg-white transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow opacity-0 group-hover:opacity-100"
                   aria-label="Next image"
                 >
-                  <ChevronRight className="w-5 h-5 text-black" />
+                  <ChevronRight className="w-4 h-4 text-slate-800" />
                 </button>
               </>
             )}
@@ -173,7 +173,7 @@ export default function PropertyCard({ property }: any) {
                     onClick={() => setCurrentImageIndex(index)}
                     className={`transition-all duration-300 rounded-full ${
                       index === currentImageIndex
-                        ? 'w-6 h-1.5 bg-[#b04439]'
+                        ? 'w-6 h-1.5 bg-accent'
                         : 'w-1.5 h-1.5 bg-white/60 hover:bg-white'
                     }`}
                     aria-label={`Go to image ${index + 1}`}
@@ -185,7 +185,7 @@ export default function PropertyCard({ property }: any) {
             {/* Status Badge */}
             {property.status && (
               <div className="absolute top-4 right-4">
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(property.status)} shadow-lg`}>
+                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${getStatusColor(property.status)} shadow-md`}>
                   {getStatusIcon(property.status)}
                   <span>{property.status.charAt(0).toUpperCase() + property.status.slice(1)}</span>
                 </div>
@@ -194,8 +194,8 @@ export default function PropertyCard({ property }: any) {
 
             {/* Property Type Badge */}
             <div className="absolute top-4 left-4">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-sm font-semibold shadow-lg capitalize">
-                <Home className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-800 text-[10px] font-bold uppercase tracking-wider shadow-md">
+                <Home className="w-3.5 h-3.5 text-accent" />
                 {property.propertyType || 'Property'}
               </div>
             </div>
@@ -203,7 +203,7 @@ export default function PropertyCard({ property }: any) {
             {/* Premium Badge for Approved */}
             {property.status === 'approved' && (
               <div className="absolute top-16 left-4">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#b04439] text-white text-xs font-bold shadow-lg">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2e7d54] text-white text-xs font-bold shadow-lg">
                   <Award className="w-3.5 h-3.5" />
                   VERIFIED
                 </div>
@@ -226,21 +226,21 @@ export default function PropertyCard({ property }: any) {
         {/* Title and Price */}
         <div className="space-y-3">
           <div>
-            <h3 className="text-2xl font-bold text-black mb-1 capitalize">
+            <h3 className="text-xl font-bold text-black mb-1 capitalize">
               {property.bhk || 'N/A'} {property.propertyType || 'Property'}
             </h3>
-            <h4 className="text-base font-semibold text-neutral-700">
+            <h4 className="text-sm font-semibold text-neutral-700">
               {property.propertyName}
             </h4>
           </div>
           
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-neutral-600">
-              <MapPin className="w-4 h-4 text-[#b04439]" />
+              <MapPin className="w-4 h-4 text-[#2e7d54]" />
               <span className="text-sm font-medium">{property.city || 'Unknown'}</span>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-bold text-[#b04439]">
+              <div className="text-2xl font-bold text-[#2e7d54]">
                 {formatPrice(property.price)}
               </div>
               <div className="text-xs font-medium text-neutral-500 uppercase mt-1">
@@ -252,33 +252,33 @@ export default function PropertyCard({ property }: any) {
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#b04439] transition-colors">
+          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#2e7d54] transition-colors">
             <div className="flex items-center gap-2 mb-1">
-              <Bed className="w-4 h-4 text-[#b04439]" />
+              <Bed className="w-4 h-4 text-[#2e7d54]" />
               <span className="text-xs text-neutral-500 font-medium">Bedrooms</span>
             </div>
             <div className="text-lg font-bold text-black">{property.bhk || 'N/A'}</div>
           </div>
 
-          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#b04439] transition-colors">
+          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#2e7d54] transition-colors">
             <div className="flex items-center gap-2 mb-1">
-              <Maximize2 className="w-4 h-4 text-[#b04439]" />
+              <Maximize2 className="w-4 h-4 text-[#2e7d54]" />
               <span className="text-xs text-neutral-500 font-medium">Area</span>
             </div>
             <div className="text-lg font-bold text-black">{property.sqft || 'N/A'} ft²</div>
           </div>
 
-          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#b04439] transition-colors">
+          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#2e7d54] transition-colors">
             <div className="flex items-center gap-2 mb-1">
-              <DollarSign className="w-4 h-4 text-[#b04439]" />
+              <DollarSign className="w-4 h-4 text-[#2e7d54]" />
               <span className="text-xs text-neutral-500 font-medium">Charges</span>
             </div>
             <div className="text-lg font-bold text-black">₹{property.charges || '0'}</div>
           </div>
 
-          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#b04439] transition-colors">
+          <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 hover:border-[#2e7d54] transition-colors">
             <div className="flex items-center gap-2 mb-1">
-              <Calendar className="w-4 h-4 text-[#b04439]" />
+              <Calendar className="w-4 h-4 text-[#2e7d54]" />
               <span className="text-xs text-neutral-500 font-medium">Listed</span>
             </div>
             <div className="text-sm font-bold text-black">{formatDate(property.createdAt).split(',')[0]}</div>
@@ -288,7 +288,7 @@ export default function PropertyCard({ property }: any) {
         {/* Address */}
         <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#b04439] flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-[#2e7d54] flex items-center justify-center flex-shrink-0">
               <MapPin className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1">
@@ -306,7 +306,7 @@ export default function PropertyCard({ property }: any) {
         {facilities.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#b04439]" />
+              <Sparkles className="w-4 h-4 text-[#2e7d54]" />
               <div className="text-sm font-semibold text-black">
                 Amenities
               </div>
@@ -315,7 +315,7 @@ export default function PropertyCard({ property }: any) {
               {facilities.map((facility: string, index: number) => (
                 <span
                   key={index}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-sm font-medium text-black hover:border-[#b04439] hover:text-[#b04439] transition-colors capitalize"
+                  className="px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-sm font-medium text-black hover:border-[#2e7d54] hover:text-[#2e7d54] transition-colors capitalize"
                 >
                   {facility}
                 </span>
@@ -327,7 +327,7 @@ export default function PropertyCard({ property }: any) {
         {/* Payment Information */}
         <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <CreditCard className="w-4 h-4 text-[#b04439]" />
+            <CreditCard className="w-4 h-4 text-[#2e7d54]" />
             <div className="text-sm font-semibold text-black">
               Payment Information
             </div>
@@ -372,7 +372,7 @@ export default function PropertyCard({ property }: any) {
               href={receiptUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#b04439] hover:bg-[#8f3730] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#2e7d54] hover:bg-[#246a47] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Receipt className="w-4 h-4" />
               <span>Payment Receipt</span>
@@ -394,7 +394,7 @@ export default function PropertyCard({ property }: any) {
                   console.error(err);
                 }
               }}
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#b04439] hover:bg-[#8f3730] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#2e7d54] hover:bg-[#246a47] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Sparkles className="w-4 h-4" />
               <span>Generate Receipt</span>
@@ -430,7 +430,7 @@ export default function PropertyCard({ property }: any) {
         {property.status === 'approved' && (
           <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-5">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#b04439] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-[#2e7d54] flex items-center justify-center">
                 <Shield className="w-4 h-4 text-white" />
               </div>
               <div>

@@ -44,7 +44,7 @@ export default function SellerDashboard() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pt-28 pb-12">
         <div className="w-full max-w-2xl bg-card p-8 rounded-lg border border-border text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">
             Hello, {user.name}!

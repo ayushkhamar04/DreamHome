@@ -52,43 +52,43 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
         <div className="w-full max-w-md">
-          <div className="bg-card rounded-lg border border-border p-8">
+          <div className="bg-card rounded-[2rem] border border-border/80 p-8 shadow-sm">
             {/* Back Button */}
             <Link 
               href="/auth/login" 
-              className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+              className="inline-flex items-center text-[10px] font-bold text-slate-500 hover:text-slate-800 mb-6 transition-colors uppercase tracking-wider"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
               Back to Login
             </Link>
 
             <div className="mb-8">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Mail className="w-6 h-6 text-primary" />
+              <div className="w-12 h-12 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center mb-4">
+                <Mail className="w-6 h-6 text-accent" />
               </div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">Forgot Password?</h1>
-              <p className="text-muted-foreground">
+              <h1 className="text-2xl font-bold font-display text-slate-900 mb-2">Forgot Password?</h1>
+              <p className="text-xs font-semibold text-slate-500 leading-relaxed">
                 No worries! Enter your email address and we'll send you a verification code to reset your password.
               </p>
             </div>
 
             {error && (
-              <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-                <p className="text-sm text-destructive">{error}</p>
+              <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl">
+                <p className="text-xs font-bold text-rose-700">{error}</p>
               </div>
             )}
 
             {success && (
-              <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+              <div className="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">
+                    <p className="text-xs font-bold text-emerald-900">
                       Verification code sent!
                     </p>
-                    <p className="text-xs text-emerald-700 dark:text-emerald-200 mt-1">
+                    <p className="text-[10px] text-emerald-700 font-semibold mt-0.5">
                       Check your email for the OTP. Redirecting...
                     </p>
                   </div>
@@ -99,11 +99,11 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="email"
                     name="email"
@@ -112,10 +112,10 @@ export default function ForgotPasswordPage() {
                     required
                     placeholder="your@email.com"
                     disabled={success}
-                    className="w-full pl-10 pr-4 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-border/80 rounded-xl text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white text-xs font-semibold disabled:opacity-50"
                   />
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="text-[10px] font-medium text-slate-400 mt-2">
                   We'll send a 6-digit verification code to this email
                 </p>
               </div>
@@ -123,16 +123,16 @@ export default function ForgotPasswordPage() {
               <Button
                 type="submit"
                 disabled={isLoading || success}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-[#0F172A] hover:bg-[#334155] text-white rounded-full font-bold h-11 text-xs uppercase tracking-wider transition-all shadow-sm"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                     Sending Code...
                   </>
                 ) : success ? (
                   <>
-                    <CheckCircle2 className="w-4 h-4 mr-2" />
+                    <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
                     Code Sent!
                   </>
                 ) : (
@@ -141,10 +141,10 @@ export default function ForgotPasswordPage() {
               </Button>
             </form>
 
-            <div className="mt-6 pt-6 border-t border-border">
-              <p className="text-center text-sm text-muted-foreground">
+            <div className="mt-6 pt-6 border-t border-slate-100">
+              <p className="text-center text-xs text-slate-400 font-semibold">
                 Remember your password?{' '}
-                <Link href="/auth/login" className="text-primary hover:text-primary/80 font-semibold">
+                <Link href="/auth/login" className="text-accent hover:text-accent/90 font-bold uppercase tracking-wider">
                   Sign in here
                 </Link>
               </p>

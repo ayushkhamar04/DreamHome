@@ -40,7 +40,7 @@ export default function FavoritesPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-28 pb-12">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <Heart className="w-8 h-8 text-primary fill-primary" />

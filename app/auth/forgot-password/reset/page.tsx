@@ -129,42 +129,42 @@ function ResetPasswordForm() {
   };
 
   return (
-    <div className="w-full max-w-md">
-      <div className="bg-card rounded-lg border border-border p-8">
+    <div className="w-full max-w-md animate-fade-in">
+      <div className="bg-card rounded-[2rem] border border-border/80 p-8 shadow-sm">
         {/* Back Button */}
         <Link 
           href="/auth/login" 
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+          className="inline-flex items-center text-[10px] font-bold text-slate-500 hover:text-slate-800 mb-6 transition-colors uppercase tracking-wider"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
+          <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
           Back to Login
         </Link>
 
         <div className="mb-8">
-          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-            <Lock className="w-6 h-6 text-primary" />
+          <div className="w-12 h-12 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center mb-4">
+            <Lock className="w-5 h-5 text-accent" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Reset Password</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl font-bold font-display text-slate-900 mb-2">Reset Password</h1>
+          <p className="text-xs font-semibold text-slate-500 leading-relaxed">
             Create a new strong password for your account
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-            <p className="text-sm text-destructive">{error}</p>
+          <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl">
+            <p className="text-xs font-bold text-rose-700">{error}</p>
           </div>
         )}
 
         {success && (
-          <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          <div className="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">
+                <p className="text-xs font-bold text-emerald-900">
                   Password reset successful!
                 </p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-200 mt-1">
+                <p className="text-[10px] text-emerald-700 font-semibold mt-0.5">
                   Redirecting to login page...
                 </p>
               </div>
@@ -175,11 +175,11 @@ function ResetPasswordForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* New Password */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
               New Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="newPassword"
@@ -188,39 +188,39 @@ function ResetPasswordForm() {
                 required
                 disabled={success}
                 placeholder="Enter new password"
-                className="w-full pl-10 pr-12 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-11 pr-12 py-2.5 bg-slate-50 border border-border/80 rounded-xl text-slate-850 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white text-xs font-semibold disabled:opacity-50"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
             
             {/* Password Strength Indicator */}
             {formData.newPassword && (
-              <div className="mt-2">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-muted-foreground">Password Strength:</span>
-                  <span className={`text-xs font-semibold ${
-                    passwordStrength.score <= 2 ? 'text-red-500' :
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Password Strength</span>
+                  <span className={`text-[9px] font-bold uppercase tracking-wider ${
+                    passwordStrength.score <= 2 ? 'text-rose-500' :
                     passwordStrength.score <= 3 ? 'text-amber-500' :
-                    passwordStrength.score <= 4 ? 'text-blue-500' :
-                    'text-green-500'
+                    passwordStrength.score <= 4 ? 'text-indigo-500' :
+                    'text-emerald-500'
                   }`}>
                     {passwordStrength.label}
                   </span>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1.5">
                   {[...Array(5)].map((_, i) => (
                     <div
                       key={i}
                       className={`h-1 flex-1 rounded-full transition-all ${
                         i < passwordStrength.score
                           ? passwordStrength.color
-                          : 'bg-secondary'
+                          : 'bg-slate-100'
                       }`}
                     />
                   ))}
@@ -228,18 +228,18 @@ function ResetPasswordForm() {
               </div>
             )}
             
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-[10px] font-semibold text-slate-400 mt-2">
               Use at least 6 characters with a mix of letters, numbers & symbols
             </p>
           </div>
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">
               Confirm New Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 name="confirmPassword"
@@ -248,23 +248,23 @@ function ResetPasswordForm() {
                 required
                 disabled={success}
                 placeholder="Confirm new password"
-                className="w-full pl-10 pr-12 py-2 bg-secondary border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pl-11 pr-12 py-2.5 bg-slate-50 border border-border/80 rounded-xl text-slate-850 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:bg-white text-xs font-semibold disabled:opacity-50"
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               >
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
             
             {/* Password Match Indicator */}
             {formData.confirmPassword && (
-              <p className={`text-xs mt-2 ${
+              <p className={`text-[10px] font-bold mt-2 uppercase tracking-wider ${
                 formData.newPassword === formData.confirmPassword
-                  ? 'text-green-600 dark:text-green-400'
-                  : 'text-red-600 dark:text-red-400'
+                  ? 'text-emerald-605'
+                  : 'text-rose-505'
               }`}>
                 {formData.newPassword === formData.confirmPassword
                   ? '✓ Passwords match'
@@ -276,16 +276,16 @@ function ResetPasswordForm() {
           <Button
             type="submit"
             disabled={isLoading || success}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="w-full bg-[#0F172A] hover:bg-[#334155] text-white rounded-full font-bold h-11 text-xs uppercase tracking-wider transition-all shadow-sm"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                 Resetting Password...
               </>
             ) : success ? (
               <>
-                <CheckCircle2 className="w-4 h-4 mr-2" />
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" />
                 Password Reset!
               </>
             ) : (
@@ -295,11 +295,11 @@ function ResetPasswordForm() {
         </form>
 
         {/* Security Tips */}
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/50 rounded-lg">
-          <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-2">
+        <div className="mt-6 p-4 bg-slate-50 border border-border/80 rounded-2xl">
+          <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
             🔐 Password Security Tips
           </h3>
-          <ul className="text-xs text-blue-800 dark:text-blue-200 space-y-1">
+          <ul className="text-[10px] text-slate-500 font-semibold space-y-1.5">
             <li>• Use a unique password for this account</li>
             <li>• Don't share your password with anyone</li>
             <li>• Change your password regularly</li>
@@ -315,12 +315,12 @@ export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
         <Suspense fallback={
           <div className="w-full max-w-md">
-            <div className="bg-card rounded-lg border border-border p-8">
-              <div className="flex items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <div className="bg-card rounded-[2rem] border border-border/80 p-8">
+              <div className="flex items-center justify-center py-10">
+                <Loader2 className="w-8 h-8 animate-spin text-accent" />
               </div>
             </div>
           </div>

@@ -13,7 +13,7 @@ L.Icon.Default.mergeOptions({
 
 function createPropertyIcon(selected = false) {
   return L.divIcon({
-    html: `<div style="background:${selected ? '#1d4ed8' : '#b04439'};color:white;padding:${selected ? '6px 12px' : '4px 10px'};border-radius:10px;font-size:${selected ? '13px' : '11px'};font-weight:700;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,0.3);border:2px solid white;${selected ? 'transform:scale(1.1);' : ''}">₹</div>`,
+    html: `<div style="background:${selected ? '#1d4ed8' : '#2e7d54'};color:white;padding:${selected ? '6px 12px' : '4px 10px'};border-radius:10px;font-size:${selected ? '13px' : '11px'};font-weight:700;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,0.3);border:2px solid white;${selected ? 'transform:scale(1.1);' : ''}">₹</div>`,
     className: '',
     iconSize: [24, 24],
     iconAnchor: [12, 24],
@@ -132,6 +132,8 @@ export default function MapView({
           </div>`
         : '';
 
+      const googleMapsLink = property.location?.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
       const popupContent = `
         <div style="font-family:system-ui,sans-serif;max-width:260px;">
           ${property.propertyImages?.[0]
@@ -163,12 +165,15 @@ export default function MapView({
               <div style="color:#888;">Dist</div>
             </div>
           </div>
-          <div style="font-size:18px;font-weight:700;color:#b04439;margin-bottom:8px;">
+          <div style="font-size:18px;font-weight:700;color:#2e7d54;margin-bottom:8px;">
             ₹${Number(property.price).toLocaleString('en-IN')}
             ${property.propertyFor === 'rent' ? '<span style="font-size:12px;color:#888;font-weight:400;">/mo</span>' : ''}
           </div>
+          <div style="margin-bottom:8px;">
+            <a href="${googleMapsLink}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:8px 0;background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;border-radius:10px;font-weight:700;font-size:12px;text-decoration:none;transition:all 0.2s;">🗺️ View on Google Maps</a>
+          </div>
           ${showInquiry
-            ? `<button onclick="window.__mapInquiry('${property._id}','${safeTitle}')" style="width:100%;padding:10px;background:#b04439;color:white;border:none;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;transition:background 0.2s;">📩 Send Inquiry</button>`
+            ? `<button onclick="window.__mapInquiry('${property._id}','${safeTitle}')" style="width:100%;padding:10px;background:#2e7d54;color:white;border:none;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;transition:background 0.2s;">📩 Send Inquiry</button>`
             : ''
           }
         </div>
@@ -202,10 +207,30 @@ export default function MapView({
   }, [properties, userCoords, showInquiry, onPropertyClick, selectedProperty]);
 
   return (
-    <div
-      ref={mapRef}
-      style={{ height, width: '100%' }}
-      className="rounded-xl border border-gray-200 shadow-lg"
-    />
+    <div className="relative w-full" style={{ height }}>
+      <div
+        ref={mapRef}
+        className="w-full h-full rounded-xl border border-gray-200 shadow-lg"
+      />
+      <button
+        type="button"
+        onClick={() => {
+          const map = mapInstanceRef.current;
+          if (map) {
+            const center = map.getCenter();
+            const zoom = map.getZoom();
+            window.open(`https://www.google.com/maps/@${center.lat},${center.lng},${zoom}z`, '_blank');
+          } else {
+            window.open('https://maps.google.com', '_blank');
+          }
+        }}
+        className="absolute top-3 right-3 bg-white hover:bg-slate-100 text-gray-800 font-bold py-2 px-3 rounded-lg shadow-md border border-gray-300 text-xs flex items-center gap-1.5 z-[1000] transition"
+      >
+        <svg className="w-4 h-4 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+        Open in Google Maps
+      </button>
+    </div>
   );
 }
