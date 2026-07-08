@@ -132,7 +132,8 @@ export default function MapView({
           </div>`
         : '';
 
-      const googleMapsLink = property.location?.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+      const origin = userCoords ? `${userCoords.lat},${userCoords.lng}` : '';
+      const googleMapsLink = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${lat},${lng}`;
 
       const popupContent = `
         <div style="font-family:system-ui,sans-serif;max-width:260px;">
@@ -215,13 +216,21 @@ export default function MapView({
       <button
         type="button"
         onClick={() => {
-          const map = mapInstanceRef.current;
-          if (map) {
-            const center = map.getCenter();
-            const zoom = map.getZoom();
-            window.open(`https://www.google.com/maps/@${center.lat},${center.lng},${zoom}z`, '_blank');
+          if (selectedProperty?.location?.lat && selectedProperty?.location?.lng) {
+            const lat = selectedProperty.location.lat;
+            const lng = selectedProperty.location.lng;
+            const origin = userCoords ? `${userCoords.lat},${userCoords.lng}` : '';
+            const dirUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${lat},${lng}`;
+            window.open(dirUrl, '_blank');
           } else {
-            window.open('https://maps.google.com', '_blank');
+            const map = mapInstanceRef.current;
+            if (map) {
+              const center = map.getCenter();
+              const zoom = map.getZoom();
+              window.open(`https://www.google.com/maps/@${center.lat},${center.lng},${zoom}z`, '_blank');
+            } else {
+              window.open('https://maps.google.com', '_blank');
+            }
           }
         }}
         className="absolute top-3 right-3 bg-white hover:bg-slate-100 text-gray-800 font-bold py-2 px-3 rounded-lg shadow-md border border-gray-300 text-xs flex items-center gap-1.5 z-[1000] transition"

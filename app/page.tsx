@@ -620,7 +620,20 @@ export default function HomePage() {
     let filtered = [...properties];
     if (filters.city?.trim()) filtered = filtered.filter(p => p.city?.toLowerCase().includes(filters.city.toLowerCase()));
     if (filters.propertyFor) filtered = filtered.filter(p => p.propertyFor?.toLowerCase() === filters.propertyFor.toLowerCase());
-    if (filters.bhk) filtered = filtered.filter(p => p.bhk === filters.bhk);
+    if (filters.bhk) {
+      const normalizedFilter = filters.bhk.replace(/\s+/g, '').toUpperCase();
+      const filterDigit = normalizedFilter.replace(/[^\d]/g, '');
+      filtered = filtered.filter(p => {
+        if (!p.bhk) return false;
+        const normalizedProp = p.bhk.toString().replace(/\s+/g, '').toUpperCase();
+        const propDigit = normalizedProp.replace(/[^\d]/g, '');
+        if (filterDigit === '5') {
+          const propNum = parseInt(propDigit, 10);
+          return !isNaN(propNum) && propNum >= 5;
+        }
+        return normalizedProp === normalizedFilter || propDigit === filterDigit;
+      });
+    }
     if (filters.propertyType) filtered = filtered.filter(p => p.propertyType?.toLowerCase() === filters.propertyType.toLowerCase());
     if (filters.minPrice > 0) filtered = filtered.filter(p => !isNaN(Number(p.price)) && Number(p.price) >= filters.minPrice);
     if (filters.maxPrice > 0) filtered = filtered.filter(p => !isNaN(Number(p.price)) && Number(p.price) <= filters.maxPrice);
