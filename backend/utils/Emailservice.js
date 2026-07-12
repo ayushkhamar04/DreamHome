@@ -3,7 +3,65 @@ const sgMail = require('@sendgrid/mail');
 // Initialize SendGrid with API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const FROM_EMAIL = 'onboarding@yourdomain.com'; // Replace with your verified SendGrid sender
+// Override sgMail.send if MailBluster API configuration is provided
+if (process.env.MAILBLUSTER_API_KEY) {
+  sgMail.send = async (msg) => {
+    const fromStr = msg.from && typeof msg.from === 'object'
+      ? `"${msg.from.name || 'DreamHome'}" <${msg.from.email || 'onboarding@yourdomain.com'}>`
+      : msg.from || `"DreamHome" <onboarding@yourdomain.com>`;
+
+    const payload = {
+      to: msg.to,
+      subject: msg.subject,
+      from: fromStr,
+      html: msg.html,
+      text: msg.text || ""
+    };
+
+    const response = await fetch("https://api.mailbluster.com/v1/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": process.env.MAILBLUSTER_API_KEY.trim(),
+        "x-mailbluster-api-key": process.env.MAILBLUSTER_API_KEY.trim()
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || `MailBluster API Error: ${response.statusText}`);
+    }
+
+    console.log('Email sent via MailBluster API successfully:', data);
+    return [{ statusCode: 200, message: 'Sent via MailBluster' }];
+  };
+} else if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+  // Override sgMail.send if Gmail SMTP configuration is provided
+  sgMail.send = async (msg) => {
+    const nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: `"${msg.from?.name || 'DreamHome'}" <${process.env.EMAIL_USER}>`,
+      to: msg.to,
+      subject: msg.subject,
+      html: msg.html,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent via Nodemailer (Gmail):', info.messageId);
+    return [{ statusCode: 200, messageId: info.messageId }];
+  };
+}
+
+const FROM_EMAIL = process.env.EMAIL_USER || 'onboarding@yourdomain.com'; // Replace with your verified SendGrid sender
 const FROM_NAME = 'DreamHome';
 
 // Send OTP Email

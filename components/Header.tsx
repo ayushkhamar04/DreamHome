@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Menu, X, LogOut, Home, FileText, Settings, ChevronRight, Building2, MessageSquare, LayoutDashboard, Leaf } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import api from '@/app/lib/api';
+import { toast } from '@/hooks/use-toast';
 
 type User = { name: string; role: string };
 
@@ -45,6 +47,108 @@ export default function Header() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
+
+  useEffect(() => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+    if (!token || !storedUser) return;
+
+    let currentUser: any = null;
+    try {
+      currentUser = JSON.parse(storedUser);
+    } catch {
+      return;
+    }
+    if (!currentUser) return;
+
+    const seenMessageIds = new Set<string>();
+    let isFirstLoad = true;
+
+    const playChime = () => {
+      try {
+        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        
+        const playTone = (freq: number, startTime: number, duration: number, volume: number) => {
+          const osc = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          
+          osc.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, startTime);
+          
+          gainNode.gain.setValueAtTime(0, startTime);
+          gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.03);
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+          
+          osc.start(startTime);
+          osc.stop(startTime + duration);
+        };
+
+        const now = audioCtx.currentTime;
+        // Premium 3-tone arpeggiated C-major chord arpeggio with a warm C4 sub-bass
+        playTone(261.63, now, 0.6, 0.03); // C4
+        playTone(523.25, now, 0.5, 0.05); // C5
+        playTone(659.25, now + 0.08, 0.55, 0.05); // E5
+        playTone(783.99, now + 0.16, 0.6, 0.05); // G5
+      } catch (err) {
+        console.error('Audio play error:', err);
+      }
+    };
+
+    const checkMessages = async () => {
+      try {
+        const res = await api.get('/messages/unread/check', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.data.success && Array.isArray(res.data.activeChats)) {
+          let hasNewIncoming = false;
+
+          res.data.activeChats.forEach((msg: any) => {
+            const senderId = typeof msg.sender === 'object' ? (msg.sender?._id || msg.sender?.id) : msg.sender;
+            const myUserId = currentUser?.id || currentUser?._id;
+
+            if (senderId && myUserId && senderId.toString() !== myUserId.toString()) {
+              if (!seenMessageIds.has(msg._id)) {
+                seenMessageIds.add(msg._id);
+                if (!isFirstLoad) {
+                  hasNewIncoming = true;
+                  const senderName = msg.sender?.name || 'Property Owner';
+                  toast({
+                    title: undefined,
+                    description: (
+                      <div className="flex items-start gap-3 py-1 text-slate-800">
+                        <div className="w-9 h-9 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-xs shadow-sm shadow-accent/25 flex-shrink-0">
+                          {senderName.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-[10px] font-bold text-accent uppercase tracking-widest leading-none">New Message</div>
+                          <div className="text-xs font-bold text-slate-900 capitalize mt-1.5">{senderName}</div>
+                          <div className="text-xs font-medium text-slate-500 mt-1 line-clamp-2 leading-relaxed">{msg.message}</div>
+                        </div>
+                      </div>
+                    ),
+                  });
+                }
+              }
+            }
+          });
+
+          if (hasNewIncoming) {
+            playChime();
+          }
+          isFirstLoad = false;
+        }
+      } catch (err) {
+        console.error('Error polling messages:', err);
+      }
+    };
+
+    checkMessages();
+    const interval = setInterval(checkMessages, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const navLink =
     'group relative flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-foreground/80 hover:text-foreground transition-all duration-300';

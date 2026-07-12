@@ -18,10 +18,12 @@ import {
   Phone,
   Briefcase,
   FileText,
-  Eye
+  Eye,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import api from '@/app/lib/api';
+import ChatOverlay from '@/components/ChatOverlay';
 
 export default function ManageInquiriesPage() {
   const router = useRouter();
@@ -32,6 +34,10 @@ export default function ManageInquiriesPage() {
   const [declineReason, setDeclineReason] = useState('');
   const [showDeclineModal, setShowDeclineModal] = useState(false);
   const [selectedInquiryId, setSelectedInquiryId] = useState<string | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [activeInquiryId, setActiveInquiryId] = useState('');
+  const [activeRecipientName, setActiveRecipientName] = useState('');
+  const [activeRecipientRole, setActiveRecipientRole] = useState('');
 
   useEffect(() => {
     fetchInquiries();
@@ -403,6 +409,18 @@ export default function ManageInquiriesPage() {
                           <p className="text-xs text-emerald-700 font-semibold leading-relaxed">
                             Your contact details have been shared with the buyer.
                           </p>
+                          <button
+                            onClick={() => {
+                              setActiveInquiryId(inquiry._id);
+                              setActiveRecipientName(inquiry.buyer?.name || 'Buyer');
+                              setActiveRecipientRole('buyer');
+                              setIsChatOpen(true);
+                            }}
+                            className="mt-4 w-full flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#0F172A] hover:bg-[#334155] text-white text-xs font-bold tracking-wider uppercase rounded-full shadow-sm transition-all"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5 text-accent" />
+                            <span>Chat with Buyer</span>
+                          </button>
                         </div>
                       ) : (
                         <div className="bg-rose-50 border border-rose-100 rounded-2xl p-4">
@@ -478,6 +496,14 @@ export default function ManageInquiriesPage() {
           </div>
         </div>
       )}
+
+      <ChatOverlay
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        inquiryId={activeInquiryId}
+        recipientName={activeRecipientName}
+        recipientRole={activeRecipientRole}
+      />
     </div>
   );
 }

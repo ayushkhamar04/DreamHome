@@ -32,6 +32,7 @@ app.use('/api/favorites', require('./routes/favorites'));
 app.use('/api/properties', require('./routes/propertyRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/inquiries', require('./routes/inquiries')); // New inquiry routes
+app.use('/api/messages', require('./routes/messages'));
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter, Plus_Jakarta_Sans, Space_Grotesk, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -62,6 +63,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${jakarta.variable} ${spaceGrotesk.variable} ${cormorant.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
+        <Toaster />
         <Analytics />
       </body>
     </html>

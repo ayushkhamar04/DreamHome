@@ -19,16 +19,22 @@ import {
   Mail,
   Briefcase,
   FileText,
-  Download
+  Download,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import api from '@/app/lib/api';
+import ChatOverlay from '@/components/ChatOverlay';
 
 export default function RequestedPropertiesPage() {
   const router = useRouter();
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [activeInquiryId, setActiveInquiryId] = useState('');
+  const [activeRecipientName, setActiveRecipientName] = useState('');
+  const [activeRecipientRole, setActiveRecipientRole] = useState('');
 
   useEffect(() => {
     fetchInquiries();
@@ -304,6 +310,19 @@ export default function RequestedPropertiesPage() {
                                 </div>
                               </div>
                             )}
+
+                            <button
+                              onClick={() => {
+                                setActiveInquiryId(inquiry._id);
+                                setActiveRecipientName(inquiry.seller?.name || 'Seller');
+                                setActiveRecipientRole('seller');
+                                setIsChatOpen(true);
+                              }}
+                              className="mt-4 w-full flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#0F172A] hover:bg-[#334155] text-white text-xs font-bold tracking-wider uppercase rounded-full shadow-sm transition-all"
+                            >
+                              <MessageSquare className="w-3.5 h-3.5 text-accent" />
+                              <span>Chat with Seller</span>
+                            </button>
                           </div>
                         </div>
                       ) : inquiry.status === 'pending' ? (
@@ -327,6 +346,14 @@ export default function RequestedPropertiesPage() {
           </div>
         )}
       </main>
+
+      <ChatOverlay
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        inquiryId={activeInquiryId}
+        recipientName={activeRecipientName}
+        recipientRole={activeRecipientRole}
+      />
 
       <Footer />
     </div>
